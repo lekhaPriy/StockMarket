@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 st.title("Stock Data Dashboard 📈")
 
 # Sidebar inputs
-st.sidebar.header("VitoshAcademy LiveCoding")
+st.sidebar.header("My project")
 ticker_symbol = st.sidebar.text_input("Enter Stock Ticker (e.g., AAPL, MSFT)", value="MSFT")
 start_date = st.sidebar.date_input("Start Date", value=pd.to_datetime("2020-01-01"))
 end_date = st.sidebar.date_input("End Date", value=pd.to_datetime("2024-12-31"))
