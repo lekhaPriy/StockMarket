@@ -104,7 +104,7 @@ with tabs[5]:
     st.write("**RSI (14-day):**")
     st.line_chart(df[['RSI']])
     st.write("**MACD & Signal Line:**")
-    st.line_chart(df[['MACD', 'Signal']])
+    st.line_chart(data[['MACD', 'Signal']])
 
     # Candlestick chart
     import mplfinance as mpf
@@ -112,7 +112,7 @@ with tabs[5]:
     import base64
 
     st.write("**Candlestick Chart:**")
-    mpf_plot = mpf.plot(df, type='candle', style='charles', volume=True, mav=(12, 26), returnfig=True)
+    mpf_plot = mpf.plot(data, type='candle', style='charles', volume=True, mav=(12, 26), returnfig=True)
     fig, _ = mpf_plot
     buf = BytesIO()
     fig.savefig(buf, format="png")
