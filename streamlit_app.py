@@ -92,7 +92,7 @@ with tabs[5]:
     avg_gain = gain.rolling(window=14).mean()
     avg_loss = loss.rolling(window=14).mean()
     rs = avg_gain / avg_loss
-    df['RSI'] = 100 - (100 / (1 + rs))
+    data['RSI'] = 100 - (100 / (1 + rs))
 
     # Calculate MACD
     exp1 = data['Close'].ewm(span=12, adjust=False).mean()
