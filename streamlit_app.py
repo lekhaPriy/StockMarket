@@ -30,7 +30,7 @@ if data.empty:
 data['MA'] = data['Close'].rolling(window=ma_window).mean()
 
 # Initialize Tabs
-tabs = st.tabs(["📋 Raw Data", "📈 Price Chart", "📊 Volume Chart", "📏 Moving Averages", "💰 Dividends & Splits"])
+tabs = st.tabs(["📋 Raw Data", "📈 Price Chart", "📊 Volume Chart", "📏 Moving Averages", "💰 Dividends & Splits","📈Technical Indicators" ])
 
 # Tab 1: Raw Data
 with tabs[0]:
@@ -77,3 +77,44 @@ with tabs[4]:
     st.write(dividends if not dividends.empty else "No dividends found during this period.")
     st.write("**Splits:**")
     st.write(splits if not splits.empty else "No splits found during this period.")
+# Tab 6: Technical Indicators
+with tabs[5]:
+    st.subheader("Technical Indicators & Candlestick Chart")
+
+    # Fetch historical data
+    data = ticker.history(period="6mo")
+    data.dropna(inplace=True)
+
+    # Calculate RSI
+    delta = data['Close'].diff()
+    gain = delta.where(delta > 0, 0)
+    loss = -delta.where(delta < 0, 0)
+    avg_gain = gain.rolling(window=14).mean()
+    avg_loss = loss.rolling(window=14).mean()
+    rs = avg_gain / avg_loss
+    df['RSI'] = 100 - (100 / (1 + rs))
+
+    # Calculate MACD
+    exp1 = data['Close'].ewm(span=12, adjust=False).mean()
+    exp2 = data['Close'].ewm(span=26, adjust=False).mean()
+    data['MACD'] = exp1 - exp2
+    data['Signal'] = df['MACD'].ewm(span=9, adjust=False).mean()
+
+    # Display RSI and MACD
+    st.write("**RSI (14-day):**")
+    st.line_chart(df[['RSI']])
+    st.write("**MACD & Signal Line:**")
+    st.line_chart(df[['MACD', 'Signal']])
+
+    # Candlestick chart
+    import mplfinance as mpf
+    from io import BytesIO
+    import base64
+
+    st.write("**Candlestick Chart:**")
+    mpf_plot = mpf.plot(df, type='candle', style='charles', volume=True, mav=(12, 26), returnfig=True)
+    fig, _ = mpf_plot
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    st.image(buf)
+sv")
