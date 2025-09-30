@@ -102,7 +102,7 @@ with tabs[5]:
 
     # Display RSI and MACD
     st.write("**RSI (14-day):**")
-    st.line_chart(df[['RSI']])
+    st.line_chart(data[['RSI']])
     st.write("**MACD & Signal Line:**")
     st.line_chart(data[['MACD', 'Signal']])
 
