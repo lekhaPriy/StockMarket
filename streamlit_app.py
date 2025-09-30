@@ -22,6 +22,8 @@ ma_window = st.sidebar.slider("Moving Average Window", min_value=5, max_value=50
 # Fetching data
 st.write(f"Fetching data for **{ticker_symbol}** from {start_date} to {end_date}...")
 data = yf.download(ticker_symbol, start=start_date, end=end_date)
+st.title("Stock Dashboard")
+st.write("Use the sidebar to select options.")
 
 if data.empty:
     st.error("No data found. Please check the ticker symbol or date range.")
