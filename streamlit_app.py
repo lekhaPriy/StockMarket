@@ -117,4 +117,3 @@ with tabs[5]:
     buf = BytesIO()
     fig.savefig(buf, format="png")
     st.image(buf)
-sv")
