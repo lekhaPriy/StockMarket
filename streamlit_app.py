@@ -98,7 +98,7 @@ with tabs[5]:
     exp1 = data['Close'].ewm(span=12, adjust=False).mean()
     exp2 = data['Close'].ewm(span=26, adjust=False).mean()
     data['MACD'] = exp1 - exp2
-    data['Signal'] = df['MACD'].ewm(span=9, adjust=False).mean()
+    data['Signal'] = data['MACD'].ewm(span=9, adjust=False).mean()
 
     # Display RSI and MACD
     st.write("**RSI (14-day):**")
